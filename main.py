@@ -24,14 +24,34 @@ def read_and_process_file(file_name):
     total_ips = len(client_ips)
 
     # Calcular el porcentaje de cada IP
-    data = [(ip, count, round((count / total_ips) * 100, 2)) for ip, count in ip_counts.items()]
+    data_client_ips = [(ip, count, round((count / total_ips) * 100, 2)) for ip, count in ip_counts.items()]
 
-    # Imprimir resultados en formato de tabla
+    # Imprimir primeros 5 resultados en formato de tabla
     print(f"{'Client IP':<20} {'Count':>5} {'%':>6}")
     print(f"{'-'*20} {'-'*5} {'-'*6}")
-    for ip, count, percent in data[:5]:
+    for ip, count, percent in data_client_ips[:5]:
         print(f"{ip:<20} {count:>5} {percent:>6}%")
     print(f"{'-'*20} {'-'*5} {'-'*6}")
+
+    print()
+
+     # Contar las ocurrencias de cada client_name
+    name_counts = client_names.value_counts()
+    total_names = len(client_names)
+
+    # Calcular el porcentaje de cada client_name y tomar solo los primeros 5
+    data_host_rank = [(name, count, round((count / total_names) * 100, 2)) for name, count in name_counts.items()]
+
+
+    # Imprimir primeros 5 resultados en formato de tabla
+    print(f"{'Host Rank':<50} {'Count':>5} {'%':>6}")
+    print(f"{'-'*50} {'-'*5} {'-'*6}")
+    for name, count, percent in data_host_rank[:5]:
+        print(f"{name:<50} {count:>5} {percent:>6}%")
+    print(f"{'-'*50} {'-'*5} {'-'*6}")
+
+
+
 
 
 
