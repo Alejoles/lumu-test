@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    command:
+      - sh
+      - -c
+      - |
+        echo "This container will stop after ending the python job"
+        python main.py

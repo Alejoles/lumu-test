@@ -19,7 +19,7 @@ def print_client_ips_and_hosts_rank(data_ips, data_hosts):
 
     # Calcular el porcentaje de cada IP
     data_client_ips = [(ip, count, round((count / total_ips) * 100, 2)) for ip, count in ip_counts.items()]
-
+    print(f"Total records {total_ips}\n")
     # Imprimir primeros 5 resultados en formato de tabla
     print(f"{'Client IPs Rank':<20} {'Count':>5} {'%':>6}")
     print(f"{'-'*20} {'-'*5} {'-'*6}")
@@ -85,8 +85,6 @@ def make_requests(data: list):
         data_to_json = data[i*sending_size:(i+1)*sending_size]
         # print(len(data_to_json)) # Para ver que el último dato sea menor o igual a 500
         response = requests.post(url=url_parsed, headers=headers, json=(data_to_json))
-        print(response.status_code)
-        print(response.text)
 
 
 if __name__ == "__main__":
