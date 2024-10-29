@@ -69,7 +69,6 @@ def read_and_process_file(file_name: str):
     # ---------- -------------- ------------
     print_client_ips_and_hosts_rank(client_ips, client_names)
     # ---------- -------------- ------------
-    print(len(df))
     records = []
     for index in range(len(df)):
         record = {
@@ -97,13 +96,19 @@ def make_requests(data: list):
     url_parsed = f"{API_URL}/collectors/{COLLECTOR_ID}/dns/queries?key={LUMU_CLIENT_KEY}"
     sending_size = 500
     ammount_of_blocks = math.ceil(len(data) / sending_size)
+    print("Sending data...")
     for i in range(ammount_of_blocks):
         # Slice the data list to get the current batch
         data_to_json = data[i*sending_size:(i+1)*sending_size]
         # Send a POST request to the API with the current batch of data
         response = requests.post(url=url_parsed, headers=headers, json=(data_to_json))
+        if response.status_code != 200:
+            print("Something went wrong while sending the data to the API.")
+            print("Status code: ", response.status_code)
+            return
         # Optionally print the length of the current batch for debugging purposes
         # print(len(data_to_json))  # To ensure the last batch is less than or equal to 50
+    print("All data was sent successfully!!")
 
 
 if __name__ == "__main__":
